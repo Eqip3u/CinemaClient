@@ -1,0 +1,43 @@
+﻿<Window x:Class="CinemaClient.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:CinemaClient"
+        mc:Ignorable="d"
+        Title="MainWindow" Height="450" Width="800">
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*" />
+            <ColumnDefinition Width="0.8*" />
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*" />
+            <RowDefinition Height="0.2*" />
+        </Grid.RowDefinitions>
+        <ListBox Grid.Column="0" ItemsSource="{Binding FilmShows}" SelectedItem="{Binding SelectedFilmShow}">
+            <ListBox.ItemTemplate>
+                <DataTemplate>
+                    <StackPanel Margin="5">
+                        <TextBlock FontSize="18" Text="{Binding Path=Name}" />
+                        <TextBlock Text="{Binding Path=FilmStartTime, StringFormat='HH:mm dd:MM:yyyy'}" />
+                    </StackPanel>
+                </DataTemplate>
+            </ListBox.ItemTemplate>
+        </ListBox>
+
+        <StackPanel Grid.Column="1" DataContext="{Binding SelectedFilmShow}">
+            <TextBlock Text="Выбранный сеанс"  />
+            <TextBlock Text="Название фильма" />
+            <TextBox IsEnabled="False" Text="{Binding Name, UpdateSourceTrigger=PropertyChanged}" />
+            <TextBlock Text="Время сеанса" /> 
+            <TextBox IsEnabled="False" Text="{Binding FilmStartTime, StringFormat='HH:mm dd:MM:yyyy', UpdateSourceTrigger=PropertyChanged}" />
+            <TextBlock Text="Укажите количество билетов" />
+            <TextBox Text="{Binding CountTicket, UpdateSourceTrigger=PropertyChanged}" />
+        </StackPanel>
+        
+        <StackPanel Grid.Column="2" Orientation="Vertical" VerticalAlignment="Center">
+            <Button Width="100" Height="30" Command="{Binding OrderTicketCommand}" CommandParameter="{Binding SelectedFilmShow}">Купить</Button>
+        </StackPanel>
+    </Grid>
+</Window>
